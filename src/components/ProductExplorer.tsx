@@ -51,14 +51,14 @@ export function ProductExplorer({ products }: ProductExplorerProps) {
   }, [category, products, query]);
 
   return (
-    <div className="rounded-lg border border-line bg-white p-4 shadow-soft md:p-6">
+    <div className="rounded-2xl border border-line bg-white p-4 shadow-soft md:p-6">
       <div className="grid gap-3 lg:grid-cols-[1fr_260px]">
         <label className="relative block">
           <Search className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={19} />
           <input
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="상품명, 브랜드, 사양 검색"
+            placeholder="상품명, 브랜드, 키워드 검색"
             className="h-12 w-full rounded-md border border-line bg-white pl-12 pr-4 text-sm font-semibold outline-none transition focus:border-ink"
           />
         </label>
@@ -78,8 +78,8 @@ export function ProductExplorer({ products }: ProductExplorerProps) {
 
       {activeBrand ? (
         <div className="mt-4 flex flex-wrap gap-2">
-          <span className="inline-flex rounded-md bg-blue-50 px-3 py-2 text-sm font-black text-accent">
-            선택 브랜드: {activeBrand}
+          <span className="inline-flex rounded-full bg-mist px-3 py-2 text-sm font-black text-ink">
+            브랜드 필터: {activeBrand}
           </span>
         </div>
       ) : null}

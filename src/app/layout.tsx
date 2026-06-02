@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { MessageCircle, Search, ShoppingBag } from "lucide-react";
+import { Search, ShoppingBag } from "lucide-react";
 import { CartProvider } from "@/components/CartProvider";
 import { FloatingSupportWidget } from "@/components/FloatingSupportWidget";
 import { FrontSignOutButton } from "@/components/FrontSignOutButton";
@@ -11,8 +11,6 @@ export const metadata: Metadata = {
   title: "MOA TECH | 프리미엄 모바일 액세서리",
   description: "Smart Accessories For Everyday. 매일 쓰는 모바일 기어를 더 정교하게."
 };
-
-const brandNames = ["Apple", "Anker", "Baseus", "UGREEN", "ESR", "Ringke", "B&O", "VANFU", "casetify"];
 
 export default async function RootLayout({
   children
@@ -56,15 +54,6 @@ export default async function RootLayout({
                 )}
               </nav>
               <div className="flex items-center gap-2">
-                <a
-                  href="https://pf.kakao.com/"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="hidden h-10 items-center gap-2 rounded-md bg-[#FEE500] px-3 text-sm font-black text-[#191919] transition hover:brightness-95 sm:inline-flex"
-                >
-                  <MessageCircle size={17} />
-                  카카오 문의
-                </a>
                 <Link
                   href="/#all-products"
                   className="inline-flex h-10 items-center gap-2 rounded-md border border-line bg-white px-3 text-sm font-black text-ink transition hover:border-ink"
@@ -79,19 +68,6 @@ export default async function RootLayout({
                 >
                   <ShoppingBag size={18} />
                 </Link>
-              </div>
-            </div>
-            <div className="border-t border-line bg-mist/70">
-              <div className="mx-auto flex max-w-7xl gap-2 overflow-x-auto px-4 py-2 lg:px-8">
-                {brandNames.map((brand) => (
-                  <Link
-                    key={brand}
-                    href={`/?brand=${encodeURIComponent(brand)}#product-results`}
-                    className="shrink-0 rounded-full border border-line bg-white px-4 py-2 text-xs font-black tracking-wide text-gray-700 shadow-sm transition hover:-translate-y-0.5 hover:border-ink hover:text-ink hover:shadow-md active:translate-y-0 active:scale-95"
-                  >
-                    {brand}
-                  </Link>
-                ))}
               </div>
             </div>
           </header>
