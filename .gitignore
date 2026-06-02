@@ -1,0 +1,12 @@
+.next
+.npm-cache
+node_modules
+out
+dist
+outputs
+work
+.env*.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
