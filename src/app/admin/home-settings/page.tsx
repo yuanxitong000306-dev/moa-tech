@@ -8,6 +8,8 @@ export const metadata = {
   title: "首页设置 | MOA TECH"
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminHomeSettingsPage() {
   const settings = await getAdminSiteSettings();
   const heroTitle = settings?.hero_title || defaultHomeHeroSettings.heroTitle;

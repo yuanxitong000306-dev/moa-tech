@@ -7,6 +7,8 @@ export const metadata = {
   title: "后台首页 | MOA TECH"
 };
 
+export const dynamic = "force-dynamic";
+
 type StatItem = {
   label: string;
   key: keyof Awaited<ReturnType<typeof getAdminDashboardStats>>;

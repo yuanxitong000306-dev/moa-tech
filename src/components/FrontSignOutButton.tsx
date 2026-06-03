@@ -9,7 +9,7 @@ export function FrontSignOutButton() {
   return (
     <button
       type="button"
-      className="shrink-0 text-sm font-bold text-gray-600 transition hover:text-ink"
+      className="shrink-0 text-xs font-bold text-gray-600 transition hover:text-ink sm:text-sm"
       onClick={async () => {
         const supabase = createSupabaseBrowserClient();
         await supabase.auth.signOut();

@@ -12,7 +12,7 @@ export const defaultHomeHeroSettings: HomeHeroSettings = {
   heroTitle: "Smart Life,\nBetter Choice.",
   heroSubtitle: "검증된 브랜드와 고품질 제품으로\n더 스마트한 일상을 경험하세요.",
   heroButtonText: "쇼핑 바로가기",
-  heroButtonUrl: "#all-products",
+  heroButtonUrl: "#brands",
   heroImageUrl: "/products/apple-ecosystem-hero-banner.png"
 };
 

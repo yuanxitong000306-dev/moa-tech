@@ -8,6 +8,8 @@ export const metadata = {
   title: "订单管理 | MOA TECH"
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminOrdersPage() {
   const orders = await getAdminOrders();
 

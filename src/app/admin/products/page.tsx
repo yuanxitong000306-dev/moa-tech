@@ -9,6 +9,8 @@ export const metadata = {
   title: "商品管理 | MOA TECH"
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminProductsPage() {
   const [categories, products] = await Promise.all([getAdminCategories(), getAdminProducts()]);
 

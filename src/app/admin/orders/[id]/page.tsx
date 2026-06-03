@@ -15,6 +15,8 @@ export const metadata = {
   title: "订单详情 | MOA TECH"
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminOrderDetailPage({ params }: AdminOrderDetailPageProps) {
   const order = await getAdminOrderById(params.id);
 

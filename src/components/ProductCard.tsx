@@ -1,56 +1,34 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
-import { AddToCartButton } from "@/components/AddToCartButton";
 import { formatPrice, type Product } from "@/lib/products";
 
 type ProductCardProps = {
   product: Product;
 };
 
-function getDisplayBadge(product: Product) {
-  if (product.isHot) {
-    return "BEST";
-  }
-  if (product.isNew) {
-    return "NEW";
-  }
-  return product.badge || "PICK";
-}
-
 export function ProductCard({ product }: ProductCardProps) {
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-sm transition hover:-translate-y-1 hover:border-gray-300 hover:shadow-soft">
-      <Link href={`/products/${product.slug}`} className="block">
-        <div className="relative aspect-[4/3] bg-[#F7F8FA]">
-          <Image
-            src={product.image}
-            alt={product.name}
-            fill
-            className="object-contain p-7 transition duration-500 group-hover:scale-105"
-            sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-          />
-          <span className="absolute left-4 top-4 rounded-full bg-ink px-3 py-1 text-xs font-black text-white shadow-sm">
-            {getDisplayBadge(product)}
-          </span>
+    <article className="group h-full">
+      <Link href={`/products/${product.slug}`} className="block h-full">
+        <div className="overflow-hidden rounded-2xl border border-line bg-white shadow-[0_12px_34px_rgba(15,23,42,0.06)] transition duration-300 group-hover:-translate-y-1 group-hover:shadow-[0_18px_46px_rgba(15,23,42,0.10)]">
+          <div className="relative aspect-square bg-[#F7F8FA]">
+            <Image
+              src={product.image}
+              alt={product.name}
+              fill
+              className="object-contain p-4 transition duration-500 group-hover:scale-105 sm:p-6"
+              sizes="(min-width: 1280px) 20vw, (min-width: 1024px) 25vw, 50vw"
+            />
+          </div>
+          <div className="p-3 sm:p-4">
+            <p className="text-[10px] font-black uppercase text-gray-500 sm:text-xs">{product.brand}</p>
+            <h3 className="mt-1 line-clamp-2 min-h-[38px] text-xs font-bold leading-5 text-ink sm:min-h-[44px] sm:text-sm sm:leading-5">
+              {product.name}
+            </h3>
+            <p className="mt-2 text-sm font-black text-ink sm:text-base">{formatPrice(product.price)}</p>
+          </div>
         </div>
       </Link>
-      <div className="flex flex-1 flex-col p-5">
-        <Link href={`/products/${product.slug}`} className="block">
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <p className="text-xs font-black uppercase tracking-[0.14em] text-gray-500">{product.brand}</p>
-              <h3 className="mt-2 min-h-[56px] text-base font-black leading-6 text-ink">{product.name}</h3>
-            </div>
-            <ArrowUpRight className="mt-1 shrink-0 text-gray-300 transition group-hover:text-ink" size={18} />
-          </div>
-          <p className="mt-3 line-clamp-2 min-h-[42px] text-sm leading-5 text-gray-500">{product.shortDescription}</p>
-          <p className="mt-auto pt-5 text-xl font-black text-ink">{formatPrice(product.price)}</p>
-        </Link>
-        <div className="mt-4">
-          <AddToCartButton productId={product.id} />
-        </div>
-      </div>
     </article>
   );
 }

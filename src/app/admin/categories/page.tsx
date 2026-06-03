@@ -7,6 +7,8 @@ export const metadata = {
   title: "分类管理 | MOA TECH"
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminCategoriesPage() {
   const categories = await getAdminCategories();
 

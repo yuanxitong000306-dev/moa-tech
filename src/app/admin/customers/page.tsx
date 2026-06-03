@@ -5,6 +5,8 @@ export const metadata = {
   title: "会员管理 | MOA TECH"
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminCustomersPage() {
   const profiles = await getAdminProfiles();
 
