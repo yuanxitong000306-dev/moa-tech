@@ -43,7 +43,7 @@ export function AdminLoginForm() {
           name="email"
           type="email"
           required
-          className="h-12 rounded-md border border-line px-4 text-ink outline-none focus:border-ink"
+          className="h-12 rounded-lg border border-line px-4 text-ink outline-none focus:border-ink"
           placeholder="admin@example.com"
         />
       </label>
@@ -53,18 +53,18 @@ export function AdminLoginForm() {
           name="password"
           type="password"
           required
-          className="h-12 rounded-md border border-line px-4 text-ink outline-none focus:border-ink"
+          className="h-12 rounded-lg border border-line px-4 text-ink outline-none focus:border-ink"
           placeholder="请输入密码"
         />
       </label>
       {searchParams.get("error") === "not_admin" ? (
-        <p className="rounded-md bg-red-50 px-4 py-3 text-sm font-bold text-red-600">当前账号不是管理员。</p>
+        <p className="rounded-lg bg-red-50 px-4 py-3 text-sm font-bold text-red-600">当前账号不是管理员。</p>
       ) : null}
-      {error ? <p className="rounded-md bg-red-50 px-4 py-3 text-sm font-bold text-red-600">{error}</p> : null}
+      {error ? <p className="rounded-lg bg-red-50 px-4 py-3 text-sm font-bold text-red-600">{error}</p> : null}
       <button
         type="submit"
         disabled={loading}
-        className="h-12 rounded-md bg-ink px-5 text-sm font-black text-white transition hover:bg-gray-800 disabled:opacity-60"
+        className="h-12 rounded-lg bg-ink px-5 text-sm font-black text-white transition hover:bg-gray-800 disabled:opacity-60"
       >
         {loading ? "登录中..." : "登录后台"}
       </button>

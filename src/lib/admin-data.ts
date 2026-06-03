@@ -69,6 +69,25 @@ export type AdminProfile = {
   order_count?: number;
 };
 
+export type SiteSettings = {
+  id: string;
+  hero_title: string;
+  hero_subtitle: string;
+  hero_button_text: string;
+  hero_button_url: string;
+  hero_image_url: string;
+  updated_at?: string;
+};
+
+export type AdminDashboardStats = {
+  memberCount: number;
+  todayMemberCount: number;
+  orderCount: number;
+  todayOrderCount: number;
+  productCount: number;
+  totalSales: number;
+};
+
 export async function getAdminCategories() {
   const supabase = createSupabaseAdminClient();
   const { data, error } = await supabase
@@ -199,4 +218,49 @@ export async function getAdminProfiles() {
     ...profile,
     order_count: orderCounts.get(profile.id) ?? 0
   }));
+}
+
+export async function getAdminDashboardStats(): Promise<AdminDashboardStats> {
+  const supabase = createSupabaseAdminClient();
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const todayIso = today.toISOString();
+
+  const [
+    { count: memberCount },
+    { count: todayMemberCount },
+    { count: orderCount },
+    { count: todayOrderCount },
+    { count: productCount },
+    { data: salesRows }
+  ] = await Promise.all([
+    supabase.from("profiles").select("id", { count: "exact", head: true }),
+    supabase.from("profiles").select("id", { count: "exact", head: true }).gte("created_at", todayIso),
+    supabase.from("orders").select("id", { count: "exact", head: true }),
+    supabase.from("orders").select("id", { count: "exact", head: true }).gte("created_at", todayIso),
+    supabase.from("products").select("id", { count: "exact", head: true }),
+    supabase.from("orders").select("total_amount")
+  ]);
+
+  const totalSales = (salesRows ?? []).reduce((sum, order) => sum + Number(order.total_amount ?? 0), 0);
+
+  return {
+    memberCount: memberCount ?? 0,
+    todayMemberCount: todayMemberCount ?? 0,
+    orderCount: orderCount ?? 0,
+    todayOrderCount: todayOrderCount ?? 0,
+    productCount: productCount ?? 0,
+    totalSales
+  };
+}
+
+export async function getAdminSiteSettings(): Promise<SiteSettings | null> {
+  const supabase = createSupabaseAdminClient();
+  const { data, error } = await supabase.from("site_settings").select("*").eq("id", "home").maybeSingle();
+
+  if (error) {
+    return null;
+  }
+
+  return (data as SiteSettings | null) ?? null;
 }

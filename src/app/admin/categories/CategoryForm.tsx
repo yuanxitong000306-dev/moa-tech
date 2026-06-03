@@ -14,7 +14,7 @@ export function CategoryForm({ category }: CategoryFormProps) {
           name="id"
           required
           defaultValue={category?.id ?? ""}
-          className="h-11 rounded-md border border-line px-3 outline-none focus:border-ink"
+          className="h-11 rounded-lg border border-line px-3 outline-none focus:border-ink"
           placeholder="phone-cases"
         />
       </label>
@@ -24,7 +24,7 @@ export function CategoryForm({ category }: CategoryFormProps) {
           name="name"
           required
           defaultValue={category?.name ?? ""}
-          className="h-11 rounded-md border border-line px-3 outline-none focus:border-ink"
+          className="h-11 rounded-lg border border-line px-3 outline-none focus:border-ink"
           placeholder="手机壳"
         />
       </label>
@@ -34,7 +34,7 @@ export function CategoryForm({ category }: CategoryFormProps) {
           name="sort_order"
           type="number"
           defaultValue={category?.sort_order ?? 0}
-          className="h-11 rounded-md border border-line px-3 outline-none focus:border-ink"
+          className="h-11 rounded-lg border border-line px-3 outline-none focus:border-ink"
         />
       </label>
       <label className="grid gap-2 text-sm font-bold text-gray-600 md:col-span-2">
@@ -42,12 +42,12 @@ export function CategoryForm({ category }: CategoryFormProps) {
         <textarea
           name="description"
           defaultValue={category?.description ?? ""}
-          className="min-h-24 rounded-md border border-line px-3 py-3 outline-none focus:border-ink"
+          className="min-h-24 rounded-lg border border-line px-3 py-3 outline-none focus:border-ink"
           placeholder="分类说明"
         />
       </label>
       <div className="md:col-span-2">
-        <button className="h-11 rounded-md bg-ink px-5 text-sm font-black text-white transition hover:bg-gray-800">
+        <button className="h-11 rounded-lg bg-ink px-5 text-sm font-black text-white transition hover:bg-gray-800">
           保存
         </button>
       </div>

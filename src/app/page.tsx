@@ -1,23 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, CheckCircle2, MessageCircle, PackageCheck, RefreshCcw, ShieldCheck } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { ProductCard } from "@/components/ProductCard";
 import { ProductExplorer } from "@/components/ProductExplorer";
 import { SectionHeader } from "@/components/SectionHeader";
 import { categories } from "@/lib/categories";
 import { getAllProducts } from "@/lib/products";
-
-const trustItems = [
-  { label: "정품 보장", icon: ShieldCheck },
-  { label: "빠른 배송", icon: PackageCheck },
-  { label: "카카오 상담", icon: MessageCircle },
-  { label: "7일 교환/반품", icon: RefreshCcw }
-];
+import { getHomeHeroSettings } from "@/lib/site-settings";
 
 const brandNames = ["Apple", "Anker", "Baseus", "UGREEN", "ESR", "Ringke"];
 
 export default async function HomePage() {
-  const allProducts = await getAllProducts();
+  const [allProducts, heroSettings] = await Promise.all([getAllProducts(), getHomeHeroSettings()]);
   const hotProducts = allProducts.filter((product) => product.isHot).slice(0, 4);
   const newProducts = allProducts.filter((product) => product.isNew).slice(0, 4);
   const brandPickProducts = allProducts
@@ -26,75 +20,67 @@ export default async function HomePage() {
 
   return (
     <main className="bg-white">
-      <section className="px-4 py-8 lg:px-8 lg:py-12">
-        <div className="mx-auto grid max-w-7xl overflow-hidden rounded-2xl border border-line bg-white shadow-soft lg:grid-cols-[0.95fr_1.05fr]">
-          <div className="flex flex-col justify-center px-6 py-10 sm:px-10 lg:px-12 lg:py-16">
-            <p className="w-fit rounded-full border border-line bg-mist px-4 py-2 text-xs font-black tracking-[0.18em] text-gray-600">
-              PREMIUM MOBILE GEAR
-            </p>
-            <h1 className="mt-6 max-w-xl text-4xl font-black leading-tight tracking-[-0.03em] text-ink sm:text-5xl lg:text-6xl">
-              Smart Life, Better Choice.
+      <section className="px-4 py-6 lg:px-8 lg:py-8">
+        <div className="mx-auto grid max-w-7xl overflow-hidden rounded-[24px] border border-line bg-white shadow-soft lg:min-h-[520px] lg:grid-cols-[0.88fr_1.12fr]">
+          <div className="flex flex-col justify-center px-6 py-10 sm:px-10 lg:px-14 lg:py-14">
+            <p className="text-sm font-bold text-ink/80">프리미엄 모바일 액세서리 전문점</p>
+            <h1 className="mt-5 max-w-lg text-4xl font-black leading-[1.05] tracking-[-0.03em] text-ink sm:text-5xl lg:text-6xl">
+              {heroSettings.heroTitle.split("\n").map((line) => (
+                <span key={line} className="block">
+                  {line}
+                </span>
+              ))}
             </h1>
-            <p className="mt-5 max-w-xl text-base font-bold leading-7 text-gray-600 sm:text-lg">
-              검증된 브랜드와 고품질 제품으로 더 스마트한 일상을 경험하세요.
+            <p className="mt-6 max-w-md text-base font-semibold leading-7 text-gray-600 sm:text-lg">
+              {heroSettings.heroSubtitle.split("\n").map((line) => (
+                <span key={line} className="block">
+                  {line}
+                </span>
+              ))}
             </p>
-            <div className="mt-8 flex flex-wrap items-center gap-3">
+            <div className="mt-8">
               <Link
-                href="#all-products"
-                className="inline-flex h-12 items-center gap-2 rounded-md bg-ink px-5 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-gray-800"
+                href={heroSettings.heroButtonUrl}
+                className="inline-flex h-12 items-center gap-2 rounded-lg bg-ink px-6 text-sm font-black text-white shadow-[0_12px_30px_rgba(0,0,0,0.16)] transition hover:-translate-y-0.5 hover:bg-gray-800"
               >
-                쇼핑 바로가기
+                {heroSettings.heroButtonText}
                 <ArrowRight size={18} />
               </Link>
-              <span className="inline-flex h-12 items-center rounded-md border border-line bg-white px-5 text-sm font-black text-gray-600">
-                아이폰 액세서리 최대 30% 할인
-              </span>
             </div>
-            <p className="mt-5 text-sm font-black text-gray-500">
-              MagSafe · GaN 충전기 · 프리미엄 케이스
-            </p>
           </div>
-          <div className="relative min-h-[320px] bg-mist lg:min-h-[520px]">
-            <Image
-              src="/products/anker-a1695-real.png"
-              alt="Anker 보조배터리"
-              fill
-              priority
-              className="object-cover"
-              sizes="(min-width: 1024px) 55vw, 100vw"
-            />
-            <div className="absolute bottom-5 left-5 rounded-lg bg-white/90 px-4 py-3 shadow-soft backdrop-blur">
-              <p className="text-xs font-black tracking-[0.16em] text-gray-500">TODAY PICK</p>
-              <p className="mt-1 text-sm font-black text-ink">Anker A1695 90Wh</p>
+
+          <div className="flex items-center justify-center bg-[#f7f4ef] p-4 sm:p-6 lg:p-6">
+            <div className="relative h-[330px] w-full overflow-hidden rounded-[24px] bg-white shadow-[0_24px_70px_rgba(0,0,0,0.14)] sm:h-[420px] lg:h-[480px]">
+              <Image
+                src={heroSettings.heroImageUrl}
+                alt="Apple 데스크 셋업"
+                fill
+                priority
+                className="object-cover object-center"
+                sizes="(min-width: 1024px) 58vw, 100vw"
+              />
             </div>
           </div>
         </div>
       </section>
 
-      <section className="px-4 lg:px-8">
-        <div className="mx-auto grid max-w-7xl gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {trustItems.map((item) => {
-            const Icon = item.icon;
-            return (
-              <div key={item.label} className="flex items-center gap-3 rounded-xl border border-line bg-white px-5 py-4 shadow-sm">
-                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#FEE500] text-[#191919]">
-                  <Icon size={19} />
-                </span>
-                <span className="text-sm font-black text-ink">{item.label}</span>
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
-      <section className="px-4 py-12 lg:px-8">
-        <div className="mx-auto max-w-7xl rounded-2xl border border-line bg-mist/70 px-5 py-5">
-          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+      <section className="px-4 pb-12 pt-10 lg:px-8 lg:pb-16 lg:pt-14">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-5 flex items-end justify-between gap-4">
+            <div>
+              <p className="text-lg font-black tracking-tight text-ink">BRAND</p>
+              <p className="mt-1 text-sm font-semibold text-gray-500">인기 브랜드를 만나보세요</p>
+            </div>
+            <Link href="#all-products" className="hidden items-center gap-2 text-sm font-bold text-gray-500 hover:text-ink sm:inline-flex">
+              전체 보기 <ArrowRight size={16} />
+            </Link>
+          </div>
+          <div className="flex gap-3 overflow-x-auto pb-2">
             {brandNames.map((brand) => (
               <Link
                 key={brand}
                 href={`/?brand=${encodeURIComponent(brand)}#product-results`}
-                className="rounded-full border border-line bg-white px-5 py-3 text-sm font-black text-gray-700 shadow-sm transition hover:-translate-y-0.5 hover:border-ink hover:text-ink hover:shadow-md"
+                className="flex min-w-[150px] items-center justify-center rounded-2xl border border-line bg-white px-7 py-5 text-lg font-black text-ink shadow-sm transition hover:-translate-y-0.5 hover:border-ink hover:shadow-soft"
               >
                 {brand}
               </Link>
@@ -103,11 +89,11 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section id="hot" className="mx-auto max-w-7xl px-4 pb-14 lg:px-8">
+      <section id="hot" className="mx-auto max-w-7xl px-4 pb-12 lg:px-8">
         <SectionHeader
           eyebrow="BEST SELLERS"
-          title="가장 많이 선택한 제품"
-          description="매일 쓰는 모바일 기어 중 만족도가 높은 인기 상품을 모았습니다."
+          title="베스트 상품"
+          description="고객들이 가장 많이 찾는 MOA TECH 인기 상품입니다."
         />
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {hotProducts.map((product) => (
@@ -120,8 +106,8 @@ export default async function HomePage() {
         <div className="mx-auto max-w-7xl px-4 py-14 lg:px-8">
           <SectionHeader
             eyebrow="NEW ARRIVALS"
-            title="새롭게 입고된 액세서리"
-            description="최신 디바이스와 잘 어울리는 신상품을 빠르게 만나보세요."
+            title="신상품"
+            description="새롭게 입고된 프리미엄 모바일 액세서리를 확인하세요."
           />
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {newProducts.map((product) => (
@@ -134,8 +120,8 @@ export default async function HomePage() {
       <section className="mx-auto max-w-7xl px-4 py-14 lg:px-8">
         <SectionHeader
           eyebrow="BRAND PICK"
-          title="브랜드별 추천 상품"
-          description="검증된 브랜드의 대표 제품을 MOA TECH 기준으로 선별했습니다."
+          title="브랜드 추천"
+          description="검증된 브랜드의 대표 상품만 엄선했습니다."
         />
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {brandPickProducts.map((product) => (
@@ -149,7 +135,7 @@ export default async function HomePage() {
           <SectionHeader
             eyebrow="CATEGORIES"
             title="필요한 액세서리를 빠르게 찾기"
-            description="케이스부터 충전기, 보조배터리, 이어폰까지 카테고리별로 정리했습니다."
+            description="카테고리별로 원하는 모바일 기어를 쉽게 둘러보세요."
           />
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {categories.map((category) => {
@@ -178,7 +164,7 @@ export default async function HomePage() {
         <SectionHeader
           eyebrow="SEARCH & FILTER"
           title="상품 검색"
-          description="브랜드, 카테고리, 제품명으로 원하는 모바일 액세서리를 찾아보세요."
+          description="브랜드, 카테고리, 키워드로 원하는 상품을 찾아보세요."
         />
         <ProductExplorer products={allProducts} />
       </section>

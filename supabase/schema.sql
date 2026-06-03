@@ -74,6 +74,19 @@ create table if not exists public.order_items (
   created_at timestamptz not null default now()
 );
 
+create table if not exists public.site_settings (
+  id text primary key,
+  hero_title text not null default 'Smart Life,
+Better Choice.',
+  hero_subtitle text not null default '검증된 브랜드와 고품질 제품으로
+더 스마트한 일상을 경험하세요.',
+  hero_button_text text not null default '쇼핑 바로가기',
+  hero_button_url text not null default '#all-products',
+  hero_image_url text not null default '/products/apple-ecosystem-desk.png',
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
 alter table public.orders add column if not exists user_id uuid references auth.users(id) on delete set null;
 alter table public.orders add column if not exists shipping_address text;
 alter table public.orders add column if not exists shipping_info jsonb not null default '{}'::jsonb;
@@ -115,11 +128,17 @@ create trigger profiles_set_updated_at
 before update on public.profiles
 for each row execute function public.set_updated_at();
 
+drop trigger if exists site_settings_set_updated_at on public.site_settings;
+create trigger site_settings_set_updated_at
+before update on public.site_settings
+for each row execute function public.set_updated_at();
+
 alter table public.categories enable row level security;
 alter table public.products enable row level security;
 alter table public.orders enable row level security;
 alter table public.profiles enable row level security;
 alter table public.order_items enable row level security;
+alter table public.site_settings enable row level security;
 
 drop policy if exists "Public categories are readable" on public.categories;
 create policy "Public categories are readable"
@@ -130,6 +149,17 @@ drop policy if exists "Public products are readable" on public.products;
 create policy "Public products are readable"
 on public.products for select
 using (true);
+
+drop policy if exists "Public site settings are readable" on public.site_settings;
+create policy "Public site settings are readable"
+on public.site_settings for select
+using (true);
+
+drop policy if exists "Authenticated users can manage site settings" on public.site_settings;
+create policy "Authenticated users can manage site settings"
+on public.site_settings for all
+using (auth.role() = 'authenticated')
+with check (auth.role() = 'authenticated');
 
 drop policy if exists "Authenticated users can manage categories" on public.categories;
 create policy "Authenticated users can manage categories"
@@ -202,15 +232,29 @@ insert into storage.buckets (id, name, public)
 values ('product-images', 'product-images', true)
 on conflict (id) do update set public = excluded.public;
 
+insert into storage.buckets (id, name, public)
+values ('site-assets', 'site-assets', true)
+on conflict (id) do update set public = excluded.public;
+
 drop policy if exists "Product images are publicly readable" on storage.objects;
 create policy "Product images are publicly readable"
 on storage.objects for select
 using (bucket_id = 'product-images');
 
+drop policy if exists "Site assets are publicly readable" on storage.objects;
+create policy "Site assets are publicly readable"
+on storage.objects for select
+using (bucket_id = 'site-assets');
+
 drop policy if exists "Authenticated users can upload product images" on storage.objects;
 create policy "Authenticated users can upload product images"
 on storage.objects for insert
 with check (bucket_id = 'product-images' and auth.role() = 'authenticated');
+
+drop policy if exists "Authenticated users can upload site assets" on storage.objects;
+create policy "Authenticated users can upload site assets"
+on storage.objects for insert
+with check (bucket_id = 'site-assets' and auth.role() = 'authenticated');
 
 drop policy if exists "Authenticated users can update product images" on storage.objects;
 create policy "Authenticated users can update product images"
@@ -218,7 +262,18 @@ on storage.objects for update
 using (bucket_id = 'product-images' and auth.role() = 'authenticated')
 with check (bucket_id = 'product-images' and auth.role() = 'authenticated');
 
+drop policy if exists "Authenticated users can update site assets" on storage.objects;
+create policy "Authenticated users can update site assets"
+on storage.objects for update
+using (bucket_id = 'site-assets' and auth.role() = 'authenticated')
+with check (bucket_id = 'site-assets' and auth.role() = 'authenticated');
+
 drop policy if exists "Authenticated users can delete product images" on storage.objects;
 create policy "Authenticated users can delete product images"
 on storage.objects for delete
 using (bucket_id = 'product-images' and auth.role() = 'authenticated');
+
+drop policy if exists "Authenticated users can delete site assets" on storage.objects;
+create policy "Authenticated users can delete site assets"
+on storage.objects for delete
+using (bucket_id = 'site-assets' and auth.role() = 'authenticated');

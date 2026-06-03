@@ -15,14 +15,14 @@ export default function AdminLoginPage() {
           display: none !important;
         }
       `}</style>
-      <p className="text-xs font-black uppercase tracking-[0.18em] text-accent">Admin</p>
-      <h1 className="mt-2 text-3xl font-black text-ink">管理员登录</h1>
-      <p className="mt-3 text-sm leading-6 text-gray-500">
-        登录后可管理商品、分类、会员和订单。
-      </p>
-      <Suspense>
-        <AdminLoginForm />
-      </Suspense>
+      <div className="rounded-2xl border border-line bg-white p-8 shadow-soft">
+        <p className="text-xs font-black uppercase tracking-[0.18em] text-accent">Admin</p>
+        <h1 className="mt-2 text-3xl font-black text-ink">管理员登录</h1>
+        <p className="mt-3 text-sm leading-6 text-gray-500">登录后可管理商品、分类、会员、订单和首页设置。</p>
+        <Suspense>
+          <AdminLoginForm />
+        </Suspense>
+      </div>
     </main>
   );
 }
