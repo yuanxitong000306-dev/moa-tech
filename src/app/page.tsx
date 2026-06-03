@@ -21,44 +21,42 @@ export default async function HomePage() {
   return (
     <main className="bg-white">
       <section className="px-4 py-6 lg:px-8 lg:py-8">
-        <div className="mx-auto grid max-w-7xl overflow-hidden rounded-[24px] border border-line bg-white shadow-soft lg:min-h-[520px] lg:grid-cols-[0.88fr_1.12fr]">
-          <div className="flex flex-col justify-center px-6 py-10 sm:px-10 lg:px-14 lg:py-14">
-            <p className="text-sm font-bold text-ink/80">프리미엄 모바일 액세서리 전문점</p>
-            <h1 className="mt-5 max-w-lg text-4xl font-black leading-[1.05] tracking-[-0.03em] text-ink sm:text-5xl lg:text-6xl">
-              {heroSettings.heroTitle.split("\n").map((line) => (
-                <span key={line} className="block">
-                  {line}
-                </span>
-              ))}
-            </h1>
-            <p className="mt-6 max-w-md text-base font-semibold leading-7 text-gray-600 sm:text-lg">
-              {heroSettings.heroSubtitle.split("\n").map((line) => (
-                <span key={line} className="block">
-                  {line}
-                </span>
-              ))}
-            </p>
-            <div className="mt-8">
-              <Link
-                href={heroSettings.heroButtonUrl}
-                className="inline-flex h-12 items-center gap-2 rounded-lg bg-ink px-6 text-sm font-black text-white shadow-[0_12px_30px_rgba(0,0,0,0.16)] transition hover:-translate-y-0.5 hover:bg-gray-800"
-              >
-                {heroSettings.heroButtonText}
-                <ArrowRight size={18} />
-              </Link>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-center bg-[#f7f4ef] p-4 sm:p-6 lg:p-6">
-            <div className="relative h-[330px] w-full overflow-hidden rounded-[24px] bg-white shadow-[0_24px_70px_rgba(0,0,0,0.14)] sm:h-[420px] lg:h-[480px]">
-              <Image
-                src={heroSettings.heroImageUrl}
-                alt="Apple 데스크 셋업"
-                fill
-                priority
-                className="object-cover object-center"
-                sizes="(min-width: 1024px) 58vw, 100vw"
-              />
+        <div className="relative mx-auto h-[560px] max-w-7xl overflow-hidden rounded-[24px] border border-line bg-[#eee7dc] shadow-soft sm:h-[590px] lg:h-[620px]">
+          <Image
+            src={heroSettings.heroImageUrl}
+            alt="Apple 데스크 셋업"
+            fill
+            priority
+            className="object-cover object-center"
+            sizes="(min-width: 1280px) 1280px, 100vw"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#f7efe4]/95 via-[#f7efe4]/55 to-transparent" />
+          <div className="relative z-10 flex h-full items-center px-8 sm:px-12 lg:px-16">
+            <div className="max-w-[520px] lg:max-w-[40%]">
+              <p className="text-sm font-bold text-ink/80 sm:text-base">프리미엄 모바일 액세서리 전문점</p>
+              <h1 className="mt-6 text-5xl font-black leading-[1.03] tracking-[-0.045em] text-ink sm:text-6xl lg:text-7xl">
+                {heroSettings.heroTitle.split("\n").map((line) => (
+                  <span key={line} className="block">
+                    {line}
+                  </span>
+                ))}
+              </h1>
+              <p className="mt-7 text-lg font-semibold leading-8 text-gray-600 sm:text-xl">
+                {heroSettings.heroSubtitle.split("\n").map((line) => (
+                  <span key={line} className="block">
+                    {line}
+                  </span>
+                ))}
+              </p>
+              <div className="mt-9">
+                <Link
+                  href={heroSettings.heroButtonUrl}
+                  className="inline-flex h-14 items-center gap-4 rounded-xl bg-ink px-7 text-base font-black text-white shadow-[0_18px_40px_rgba(0,0,0,0.18)] transition hover:-translate-y-0.5 hover:bg-gray-800"
+                >
+                  {heroSettings.heroButtonText}
+                  <ArrowRight size={22} />
+                </Link>
+              </div>
             </div>
           </div>
         </div>

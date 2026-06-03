@@ -82,7 +82,7 @@ Better Choice.',
 더 스마트한 일상을 경험하세요.',
   hero_button_text text not null default '쇼핑 바로가기',
   hero_button_url text not null default '#all-products',
-  hero_image_url text not null default '/products/apple-ecosystem-desk.png',
+  hero_image_url text not null default '/products/apple-ecosystem-hero-banner.png',
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
