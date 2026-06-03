@@ -4,9 +4,35 @@ import { formatPrice, type Product } from "@/lib/products";
 
 type ProductCardProps = {
   product: Product;
+  compact?: boolean;
 };
 
-export function ProductCard({ product }: ProductCardProps) {
+export function ProductCard({ product, compact = false }: ProductCardProps) {
+  if (compact) {
+    return (
+      <article className="group min-w-0">
+        <Link href={`/products/${product.slug}`} className="block">
+          <div className="relative aspect-square overflow-hidden rounded-xl border border-line bg-[#F7F8FA] transition duration-300 group-hover:-translate-y-0.5 group-hover:shadow-[0_12px_28px_rgba(15,23,42,0.10)] sm:rounded-2xl">
+            <Image
+              src={product.image}
+              alt={product.name}
+              fill
+              className="object-contain p-2.5 transition duration-500 group-hover:scale-105 sm:p-5"
+              sizes="(min-width: 1280px) 20vw, (min-width: 640px) 25vw, 24vw"
+            />
+          </div>
+          <div className="pt-2">
+            <p className="truncate text-[9px] font-black uppercase text-gray-500 sm:text-xs">{product.brand}</p>
+            <h3 className="mt-0.5 line-clamp-2 min-h-[28px] text-[10px] font-semibold leading-[14px] text-ink sm:mt-1 sm:min-h-[40px] sm:text-sm sm:leading-5">
+              {product.name}
+            </h3>
+            <p className="mt-1 text-[10px] font-black text-ink sm:mt-2 sm:text-base">{formatPrice(product.price)}</p>
+          </div>
+        </Link>
+      </article>
+    );
+  }
+
   return (
     <article className="group h-full">
       <Link href={`/products/${product.slug}`} className="block h-full">
